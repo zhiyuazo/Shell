@@ -1,0 +1,3 @@
+keycloak ALL=(root) NOPASSWD:!ALL,/usr/bin/systemctl [A-Za-z]* keycloak 
+
+

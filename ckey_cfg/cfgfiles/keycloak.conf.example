@@ -1,0 +1,66 @@
+#Ports configuring---------------------
+#   1.jboss.[http|https].port ,for keycloak admin console
+#   2.#jboss.management.http.port:8667, for domain-master, uncomment this if you want to access wildfly management console! 
+#   3.#jboss.management.native.port:9999, when domain-master/slaver, uncomment this.
+#   4.#jboss.domain.master.port:9999, when domain-slaver, uncomment this to connect to Master
+#   Tip: in csf17.9,the HTTPS service ports for wildfily manager console will not support,user should configure it manually.  
+jboss.http.port:8665
+jboss.https.port:8666
+#jboss.management.http.port:8667         
+#jboss.management.native.port:9999
+#jboss.domain.master.port:9999      
+
+#Bind address configuring---------------------
+#   1.${jboss.bind.address}+${jboss.http.port} to access keycloak console via HTTP
+#   2.${jboss.bind.address}+${jboss.https.port} to access keycloak console via HTTPS
+#   3.${jboss.bind.address.private},valid when running in [Standalone-ha|Domain]mode,for communications between keycloak instances.
+#   4.${jboss.bind.address.management},uncomment this if you want to access wildfly management console!
+#   5.${jboss.domain.master.address},uncomment this  on slaver when domain mode 
+jboss.bind.address:127.0.0.1
+jboss.bind.address.private:127.0.0.1
+#jboss.bind.address.management:127.0.0.1
+#jboss.domain.master.address:127.0.0.1 
+
+#DB configuring---------------------
+#   1.externalDB: 0 to use H2 Database , 1 to use external Database  
+#   2.DBlink    : INFOs for connection  between keycloak and DB
+#                 h2,         -- DB's driver
+#                 db4keycloak -- DB's Database
+#                 127.0.0.1   -- DB's location
+#                 3306        -- DB's port             (Default for MariaDB's port)
+#                 sa          -- DB's username         (Default for H2 database)
+#                 default-password  -- DB's encrypted password (Default reference to 'sa' )
+externalDB:0
+DBlink:h2:db4keycloak:127.0.0.1:3306:sa:default-password
+
+#Security configuring---------------------
+#   1.HTTPS : Make keycloak support HTTPS connection
+#             keycloak.jks       -- The keystore name which will be used by keycloak service (keystore-https should be placed in /opt/keycloak/security/ssl/)
+#             default-password   -- Keystore 's encrypted password -- should filled with the attribute name after use "ckeyadm vault" (Default reference to 'keycloak') 
+#   2.VAULT : Make the keystore and DB 's password encrypted by vault
+#             vault.jks      -- The keystore name which will be used by vault (keystore-vault should be placed in /opt/keycloak/security/vault/)
+#             MASK-1i9...    -- The Password for the vault keystore(default value denotes "keycloak") 
+#             initseckey     -- the alias name for encrypt key  
+#             33550336       -- the SALT vault
+#             99             -- the iterator vault
+#             Note:          Currently , the default vault files contains 3 encrypted value
+#                          +-----------------------------------------------+
+#                          | Block-name       Attribute-name       value   |
+#                          +-----------------------------------------------+
+#                          | keystore   --> default-password ---> keycloak |
+#                          | datasource --> default-password ---> sa       |
+#                          | slaver     --> default-password ---> slaver   |
+#                          +-----------------------------------------------+
+#                          So,the Block name must fixed, we can reference the Attribute name to use the encrypted value. 
+HTTPS:keycloak.jks:default-password:initcert:default-password                                        
+VAULT:vault.jks:MASK-1i9etX7oX375Tzdvf8l//F:initseckey:33550336:99
+
+#Domain configuring---------------------
+#   0. Skip this section when standalone[ha]-mode. Only valid in domain-mode
+#   1. on Master, Only required MASTERInstance be configured 
+#   2. on Slaver, Required CONTROLLER and SLAVERInstance be configured 
+#Master in Domain's address, Slave should use username=slaver,password=default-password to connect with master
+CONTROLLER:slaver:default-password  
+MASTERInstance:1:0
+SLAVERInstance:1:0
+

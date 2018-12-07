@@ -1,0 +1,104 @@
+#!/bin/bash  
+
+scripts=`dirname $0`
+for i in `find $scripts -name "*.sh"`
+do  
+    source  $i 
+done 
+
+export CKEYHOME="/opt/keycloak"
+export CFGXML=$CKEYHOME/standalone/configuration/standalone.xml
+export CFGXMLorg=$CKEYHOME/standalone/configuration/standalone.org.xml
+
+option=$1 
+shift 
+case $option in
+    init)
+        if [[ ! -f $CFGXMLorg ]]; then
+            cp $CFGXML $CFGXMLorg 
+        fi
+        cfgvault
+        cfgxmljdbcdriver
+        cfgxmlhttps
+        cp /usr/lib/systemd/system/keycloak.service.example  /usr/lib/systemd/system/keycloak.service
+        sed -i "s/CSF_MODE/csf/g" /usr/lib/systemd/system/keycloak.service
+        sed -i "s/OPERATION_MODE/standalone.sh/g" /usr/lib/systemd/system/keycloak.service
+        sed -i "s/OPERATION_FILE/-c standalone.xml/g" /usr/lib/systemd/system/keycloak.service
+        systemctl daemon-reload
+        reminder
+       ;;
+    refresh)
+        refreshdb
+        refreshhttps
+        refreshvault
+        refreshipp
+        refreshkeycloakuser
+       ;;
+    reset)
+        mv  $CFGXMLorg  $CFGXML
+        cp /usr/lib/systemd/system/keycloak.service.example  /usr/lib/systemd/system/keycloak.service
+        systemctl daemon-reload
+        echo "RESET Done!"
+       ;;
+    enfire)
+        cfgfirewalld  
+        ;;
+    unfire)
+        clsfirewall   
+        ;;
+    ckports)
+            :
+        ;;
+
+    vault)
+        if [[ $# -le 1 ]]; then
+            usage 
+        else 
+            case $1 in 
+                genkey)
+                    keytool -genseckey -alias $2 -storetype jceks  -keyalg AES  -keysize 256  -keystore $CKEYHOME/security/vault/$3
+                    ;;
+                addv)
+                    if [[ $# -lt 9 ]]; then
+                        echo "Missing value...."
+                        exit 1
+                    fi
+                    case $8 in 
+                        keystore)
+                                :                       
+                            ;;
+                        datasource)
+                                :
+                            ;;
+                        slaver)
+                                :
+                            ;;
+                        *)
+                            echo "Not support Blocak...."
+                            usage
+                            exit 1
+                            ;;
+                    esac
+                    $CKEYHOME/bin/vault.sh  -e $CKEYHOME/security/vault/ -k $CKEYHOME/security/vault/$2  -p $3 -v $4 -s $5 -i $6  -x $7 -b $8 -a $9
+                    ;;
+                ckv)
+                    $CKEYHOME/bin/vault.sh  -e $CKEYHOME/security/vault/ -k $CKEYHOME/security/vault/$2  -p $3 -v $4 -c -b $5 -a $6
+                    ;;
+                rmv)
+                    $CKEYHOME/bin/vault.sh  -e $CKEYHOME/security/vault/ -k $CKEYHOME/security/vault/$2  -p $3 -v $4 -r -b $5 -a $6
+                    ;;
+                *)
+                    usage 
+                    ;;
+            esac
+
+        fi
+        ;;
+    *|help )
+        usage
+        ;;
+esac
+
+exit 0
+
+

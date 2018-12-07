@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Icons/Material/_Colour/ic_info_blue_24px</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Feedback-Message:-Info" transform="translate(-9.000000, -5.000000)" fill="#124191">
+            <g id="Feedback-Messages">
+                <g id="Icons/Nokia/ic_info_blue_24px" transform="translate(7.000000, 3.000000)">
+                    <g transform="translate(2.000000, 2.000000)" id="Black_Icons">
+                        <g>
+                            <path d="M10,-1.97215226e-31 C4.4771525,-6.66133815e-16 2.22044605e-15,4.4771525 1.77635684e-15,10 C1.33226763e-15,15.5228475 4.4771525,20 10,20 C15.5228475,20 20,15.5228475 20,10 C20,7.3478351 18.9464316,4.80429597 17.0710678,2.92893219 C15.195704,1.0535684 12.6521649,-2.22044605e-16 10,-4.4408921e-16 L10,-1.97215226e-31 Z M11,15 L9,15 L9,9 L11,9 L11,15 Z M11,7 L9,7 L9,5 L11,5 L11,7 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

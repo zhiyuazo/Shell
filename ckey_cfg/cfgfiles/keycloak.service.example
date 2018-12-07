@@ -1,0 +1,24 @@
+[Unit]
+Description=The keycloak Service
+After=network.target nss-lookup.target
+
+[Service]
+Type=idle
+User=keycloak
+Group=keycloak
+Restart=on-failure
+RestartSec=10
+ExecStartPre=/opt/keycloak/CSF_MODE/ckeyadm  refresh
+ExecStart=/opt/keycloak/bin/OPERATION_MODE OPERATION_FILE    
+TimeoutStartSec=600
+TimeoutStopSec=600
+#ExecReload=/bin/kill -SIGHUP ${MAINPID}
+#ExecStop=/bin/kill -9 ${MAINPID}
+KillSignal=SIGTERM
+#StandardOutput=null
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+
+

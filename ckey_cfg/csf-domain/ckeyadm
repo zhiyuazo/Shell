@@ -1,0 +1,155 @@
+#!/bin/bash  
+
+scripts=`dirname $0`
+for i in `find $scripts -name "*.sh"`
+do  
+    source  $i 
+done 
+
+export CKEYHOME="/opt/keycloak"
+export CFGXML=$CKEYHOME/domain/configuration/domain.xml
+export CFGMasterXML=$CKEYHOME/domain/configuration/host-master.xml
+export CFGSlaverXML=$CKEYHOME/domain/configuration/host-slave.xml
+export CFGXMLorg=$CKEYHOME/domain/configuration/domain.org.xml
+export CFGMasterXMLorg=$CKEYHOME/domain/configuration/host-master.org.xml
+export CFGSlaverXMLorg=$CKEYHOME/domain/configuration/host-slave.org.xml
+
+option=$1 
+shift 
+case $option in
+    init)
+            if [[ ! -f $CFGXMLorg ]]; then
+                cp $CFGXML $CFGXMLorg 
+                cp $CFGMasterXML $CFGMasterXMLorg 
+                cp $CFGSlaverXML $CFGSlaverXMLorg 
+            fi
+            removexmlblock      #for Master,Slave,domain
+            addprivate          #for Master,Slave.xml
+            cfgxmlhttps         #for Master,Slave,domain
+            cfgvault            #for Master,Slave.xml
+            cfgslaverrealm      #for Slave.xml
+            cfgxmljdbcdriver    #for domain
+            ;;
+    master)
+            cp /usr/lib/systemd/system/keycloak.service.example  /usr/lib/systemd/system/keycloak.service
+            sed -i "s/CSF_MODE/csf-domain/g" /usr/lib/systemd/system/keycloak.service
+            sed -i "s/OPERATION_MODE/domain.sh/g" /usr/lib/systemd/system/keycloak.service
+            sed -i "s/OPERATION_FILE/--host-config=host-master.xml/g" /usr/lib/systemd/system/keycloak.service
+            systemctl daemon-reload
+            #-----update cfg
+            cfgmgmtuser                         #for slave can connect to domain use this user
+            refreshdb                           #for domain.xml:datasource 
+            refreshipp              master      #for domain.xml,Master.xml:bind address and service ports
+            refreshhttps            master      #for Master.xml:https
+            refreshvault            master      #for Master.xml:vault
+            refreshsvc              master      #for Master.xml:keycloak instance
+            refreshkeycloakuser
+            reminder
+            systemctl status keycloak >/dev/null 2>&1
+            if [[ $? == 0 ]]; then
+                systemctl restart keycloak
+            else
+                systemctl start keycloak
+            fi
+            sleep 3
+            ;;
+    slaver)
+            cp /usr/lib/systemd/system/keycloak.service.example  /usr/lib/systemd/system/keycloak.service
+            sed -i "s/CSF_MODE/csf-domain/g" /usr/lib/systemd/system/keycloak.service
+            sed -i "s/OPERATION_MODE/domain.sh/g" /usr/lib/systemd/system/keycloak.service
+            sed -i "s/OPERATION_FILE/--host-config=host-slave.xml/g" /usr/lib/systemd/system/keycloak.service
+            systemctl daemon-reload
+            refreshipp              slaver  #for Slaver.xml:bind address
+            refreshhttps            slaver  #for Slaver.xml:https
+            refreshvault            slaver  #for Slaver.xml:vault
+            refreshslavername       $1      #for Slaver.xml:slaver name
+            refreshlink2controller          #for user,secret,controller ip
+            refreshsvc              slaver  #for Master.xml:keycloak instance
+            reminder
+            systemctl status keycloak >/dev/null 2>&1
+            if [[ $? == 0 ]]; then
+                systemctl restart keycloak
+            else
+                systemctl start keycloak
+            fi
+            sleep 3
+            ;;
+    refresh)
+            :
+        ;;
+    status)
+            systemctl status keycloak
+        ;;
+    stop)
+            systemctl stop keycloak
+        ;;
+    reset)
+        mv  $CFGXMLorg  $CFGXML 
+        mv  $CFGMasterXMLorg $CFGMasterXML
+        mv  $CFGSlaverXMLorg $CFGSlaverXML
+        cp /usr/lib/systemd/system/keycloak.service.example  /usr/lib/systemd/system/keycloak.service
+        systemctl daemon-reload
+        echo "RESET Done!"
+        ;;
+    enfire)
+        cfgfirewalld  
+        ;;
+    unfire)
+        clsfirewall   
+        ;;
+    ckports)
+            : 
+        ;;
+
+    vault)
+        if [[ $# -le 1 ]]; then
+            usage 
+        else 
+            case $1 in 
+                genkey)
+                    keytool -genseckey -alias $2 -storetype jceks  -keyalg AES  -keysize 256  -keystore $CKEYHOME/security/vault/$3
+                    ;;
+                addv)
+                    if [[ $# -lt 9 ]]; then
+                        echo "Missing value...."
+                        exit 1
+                    fi
+                    case $8 in 
+                        keystore)
+                                :                       
+                            ;;
+                        datasource)
+                                :
+                            ;;
+                        slaver)
+                                :
+                            ;;
+                        *)
+                            echo "Not support Blocak...."
+                            useage
+                            exit 1
+                            ;;
+                    esac
+                    $CKEYHOME/bin/vault.sh  -e $CKEYHOME/security/vault/ -k $CKEYHOME/security/vault/$2  -p $3 -v $4 -s $5 -i $6  -x $7 -b $8 -a $9
+                    ;;
+                ckv)
+                    $CKEYHOME/bin/vault.sh  -e $CKEYHOME/security/vault/ -k $CKEYHOME/security/vault/$2  -p $3 -v $4 -c -b $5 -a $6
+                    ;;
+                rmv)
+                    $CKEYHOME/bin/vault.sh  -e $CKEYHOME/security/vault/ -k $CKEYHOME/security/vault/$2  -p $3 -v $4 -r -b $5 -a $6
+                    ;;
+                *)
+                    usage 
+                    ;;
+            esac
+
+        fi
+        ;;
+    *|help )
+        usage
+        ;;
+esac
+
+exit 0
+
+

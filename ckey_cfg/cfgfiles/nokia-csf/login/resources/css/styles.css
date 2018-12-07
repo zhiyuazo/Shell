@@ -1,0 +1,638 @@
+@import url('../../keycloak/lib/zocial/zocial.css');
+
+body {
+    background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.5) 100%);
+    background-color: rgba(15, 39, 77, 1.0);
+    background-image: url('../img/Background_image_Blur.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow-y:hidden;
+    font-family: sans-serif;
+}
+
+@font-face {
+    font-family: 'Nokia Pure Text';
+    src: url(NokiaPureText-Regular.ttf);
+}
+
+a {
+    text-decoration: none !important;
+}
+
+#kc-logo {
+    width: 100%;
+}
+
+div.rem {
+    vertical-align: middle;
+    width: 30px;
+    height: 32px;
+}
+
+div.chckbox {
+    vertical-align: middle;
+    width: 10px;
+    margin-right: 0px;
+}
+
+div.forgot {
+    vertical-align: middle;
+    width: 30px;
+}
+
+#kc-logo-wrapper {
+    background-image: url("../img/nokia_logo_white.svg");
+    background-repeat: no-repeat;
+    background-size: 140px;
+    height: 29.39px;
+    width: 170px;
+    margin-top: 170px;
+    margin-left: 378px;
+    position: absolute;
+}
+
+a {
+    display: inline-block;
+    color: #407EE7;
+}
+
+div#parent {
+    height: 322px;
+}
+
+div.child-form {
+    position: fixed;
+    height: 397px;
+    width: 378px;
+    margin: 45px 36px 38px 36px;
+}
+
+div.parent-form {
+    position: relative;
+    height: 480px;
+    width: 450px;
+}
+
+div.kc-dropdown a {
+    height: 17px;
+    width: 109px;
+    color: rgba(0,0,0,0.87);
+    font-family: "Nokia Pure Text";
+    font-size: 13px;
+    background: #FFFFFF;
+    line-height: 17px;
+}
+
+div#kc-locale-dropdown.kc-dropdown {
+    display: inline-flex;
+    width: 141px;
+    height: 24px;
+}
+
+div#blue {
+    width: 200px;
+    height: 400px;
+    background-color: blue;
+}
+
+div#pro-fam-name {
+    width: 281px;
+    height: 31px;
+    font-size: 24px;
+    font-family: "Nokia Pure Text";
+}
+
+div#pro-des {
+    width: 281px;
+    height: 16px;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #FFFFFF;
+    line-height: 16px;
+    font-family: "Nokia Pure Text";
+}
+
+div#version {
+    width: 97px;
+    height: 16px;
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 16px;
+    color: rgba(255,255,255,0.7);
+    font-family: "Nokia Pure Text";
+}
+
+span.drpdwn {
+    font-size: 13px;
+    color: rgba(0,0,0,0.87);
+    font-family: "Nokia Pure Text";
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+select#kc-select-drpdwn {
+    outline: none;
+    width: 132px;
+    display: inline-block;
+    border: 10px;
+    font-weight: normal;
+    font-family: "Nokia Pure Text";
+    color: rgba(0,0,0,0.87);
+    font-size: 13px;
+    margin-top: -5px;
+    -webkit-margin-start: 4px; /* margin-left only for chrome*/
+}
+
+select option {
+    background: #FAFAFA; 
+    color: rgba(0,0,0,0.87);
+    box-shadow: inset 20px 20px rgba(0,0,0,0.08);
+} 
+
+select option:hover {
+    background-color: rgba(0,0,0,0.08);
+    box-shadow: inset 20px 20px rgba(0,0,0,0.08);
+}
+
+/*FireFox*/
+
+select {
+    text-indent: 0.01px;
+    text-overflow: '';
+}
+
+/*Adding an arrow sign for dropdown to Mozilla Firefox */
+
+@-moz-document url-prefix() { 
+  
+  select {
+        -webkit-appearance: none;
+        box-sizing: border-box;
+        -moz-appearance: none;
+        appearance: none;
+        background: url(../img/ic_arrow_drop_down_black_24px.svg) right / 20px no-repeat #fff;
+        margin-right: -44px;
+    }
+}
+
+/*IE9*/
+/*Remove dropdown arrow*/
+
+select::-ms-expand {
+    display: none;
+}
+
+/*Adding an arrow sign for dropdown to IE*/
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+   
+   select {
+        -webkit-appearance: none;
+        box-sizing: border-box;
+        -moz-appearance: none;
+        appearance: none;
+        background: url(../img/ic_arrow_drop_down_black_24px.svg) right / 20px no-repeat #fff;
+        margin-right: -44px;
+    }
+}
+
+div#kc-container {
+    /*color: white;*/
+    height: 480px;
+    width: 340px;
+    border-radius: 2px 0 0 2px;
+    background-color: rgba(18,65,145,0.71);
+    margin-left: 345px;
+
+}
+div#kc-content {
+    display: block;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.12), 0 4px 4px 0 rgba(0,0,0,0.24);
+    position: relative;
+    width: 450px;
+    height: 480px;
+    margin-top: 120px;
+    margin-right: 245px;
+    margin-bottom: 120px;
+    margin-left: 340px;
+}
+
+div#lang {
+    position: absolute;
+    bottom: 0;
+    width: 155px;
+    color: rgba(0,0,0,0.87);
+    font-family: "Nokia Pure Text";
+    font-size: 13px;
+    line-height: 17px;
+}
+
+div#red-div {
+    height: 200px;
+    width: 200px;
+    background-color: gray;
+    margin-right: 1000px;
+}
+
+div#kc-form {
+    position: absolute;
+    top: 32%;
+    height: 300px;
+    width: 378px;
+    position: absolute;
+}
+
+div#kc-form label {
+    display: block;
+    font-size: 14px;
+}
+
+input {
+    outline: none;
+}
+
+input[type='text']#forget-username:focus,
+input[type='text']#forget-username:active {
+    border-color: transparent;
+    border-bottom: 2px solid #407EE7;
+}
+
+#kc-form-login input[type='text']:focus,
+#kc-form-login input[type='text']:active {
+    border-color: transparent;
+    border-bottom: 2px solid #407EE7;
+}
+
+#kc-form-login input[type='password']:focus,
+#kc-form-login input[type='password']:active {
+    border-color: transparent;
+    border-bottom: 2px solid #407EE7;
+}
+
+#kc-register-form input[type='text']:focus,
+#kc-register-form input[type='text']:active {
+    border-color: transparent;
+    border-bottom: 2px solid #407EE7;
+}
+
+#kc-register-form input[type='password']:focus,
+#kc-register-form input[type='password']:active {
+    border-color: transparent;
+    border-bottom: 2px solid #407EE7;
+}
+
+
+
+input.rememberMe {
+    position: absolute;
+    height: 18px; 
+    width: 18px; 
+    background-color: rgba(0,0,0,0.54);
+    margin-left: -13px;
+    margin-bottom: 0px;
+}
+
+input.rememberMe label {
+    vertical-align: middle;
+}
+
+div#info-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin-top: 40px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    width: 100%;
+}
+
+/*
+  placeholder color change 
+*/
+
+input[type="text"]::-webkit-input-placeholder {
+    color: rgba(0,0,0,0.38) !important;
+}
+ 
+input[type="text"]:-moz-placeholder { /* Firefox 18- */
+    color: rgba(0,0,0,0.38) !important;  
+}
+ 
+input[type="text"]::-moz-placeholder {  /* Firefox 19+ */
+    color: rgba(0,0,0,0.38) !important;  
+}
+ 
+input[type="text"]:-ms-input-placeholder {  
+    color: rgba(0,0,0,0.38) !important;  
+}
+
+/*****************************************/
+
+input[type="password"]::-webkit-input-placeholder {
+    color: rgba(0,0,0,0.38) !important;
+}
+ 
+input[type="password"]:-moz-placeholder { /* Firefox 18- */
+    color: rgba(0,0,0,0.38) !important;  
+}
+ 
+input[type="password"]::-moz-placeholder {  /* Firefox 19+ */
+    color: rgba(0,0,0,0.38) !important;  
+}
+ 
+input[type="password"]:-ms-input-placeholder {  
+    color: rgba(0,0,0,0.38) !important;  
+}
+
+/********************************/
+        /*login-form*/
+
+#kc-form-login input[type="text"], #kc-form-login input[type='password'] {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+
+#kc-form-login input[type="text"], #kc-form-login input[type='password'] {
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 20px;
+    font-family: "Nokia Pure Text";
+    color: rgba(0,0,0,0.87);
+    padding: 10px 0 3px 0;
+    width: 378px;
+}
+
+#kc-form-login input[type=submit] {
+    border: none;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 20px;
+    height: 36px;
+    width: 378px;
+    font-family: 'Nokia Pure Text';
+    border-radius: 2px;
+    background-color: #124191;
+}
+
+/********************************/
+
+        /*forget-password*/
+input[type="text"]#forget-username {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    padding: 21px 0 3px 0;
+    font-size: 14px;
+    line-height: 18px;
+    font-family: "Nokia Pure Text";
+    color: rgba(0,0,0,0.87);
+    width: 378px;
+    margin-top: 60px;
+}
+
+input[type=submit].kc-form-button {
+    border: none;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 20px;
+    height: 36px;
+    width: 378px;
+    font-family: 'Nokia Pure Text';
+    border-radius: 2px;
+    background-color: #124191;
+}
+    
+div#info-area p {
+    margin-right: 30px;
+    display: inline;
+    text-shadow: none;
+}
+
+div#forget-password-text {
+    height: 16px;
+    color: rgba(0,0,0,0.87);
+    font-family: "Nokia Pure Text";
+    font-size: 13px;
+    line-height: 16px;
+}
+
+span#forget-password a {
+   margin: 15px 0 0 -12px;
+   font-family: "Nokia Pure Text"; 
+}
+
+/********************************/
+        /*Register-form*/
+
+        /*alignment*/
+form#kc-register-form {
+    position: absolute;
+    top: -145px;
+    color: rgba(0,0,0,0.87);
+    font-family: 'Nokia Pure Text';
+    height: 350px;
+}
+
+#kc-register-form input[type="text"], input[type="password"] {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    padding: 21px 0 3px 0;
+    margin: 0px;
+    font-size: 14px;
+    line-height: 18px;
+    font-family: "Nokia Pure Text";
+    color: rgba(0,0,0,0.87);
+    width: 378px;
+}
+
+#kc-registration {
+    position: absolute;
+    top: 24px;
+    font-size: 13px;
+    height: 30px;
+    width: 378px;
+    border-radius: 2px;
+    background-color: #EEEEEE;
+}
+
+span#new-register {
+    color: rgba(0,0,0,0.87);
+    position: absolute;
+    padding-left: 17px;
+    margin-top: 6px;
+}
+
+input[type=submit].register-submit {
+    border: none;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 500;
+    height: 36px;
+    width: 378px;
+    font-family: 'Nokia Pure Text';
+    border-radius: 2px;
+    background-color: #124191;
+}
+/********************************/
+
+/********************************/
+div#kc-info div {
+    font-family: 'Nokia Pure Text';
+    color: rgba(0,0,0,0.87);
+    font-size: 13px;
+}
+
+div#kc-form-options div {
+    display: inline-block;
+    position: relative;
+    height: 32px;
+    margin-right: 74px;
+    margin-left: 12px;
+    margin-top: 4px;
+    font-size: 13px;
+    color: rgba(0,0,0,0.54);
+    line-height: 16px;
+    font-family: "Nokia Pure Text";
+}
+
+div#kc-form-options div label {
+    vertical-align: middle;
+    font-size: 13px;
+
+}
+
+div#kc-form-options {
+    width: 378px;
+}
+
+div#kc-feedback {
+    box-shadow: 0px 0px 6px rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+div#kc-feedback-wrapper {
+    padding: 1em;
+}
+
+span.kc-feedback-text {
+    content: "\2764\ ";
+    color: #D50000;
+    height: 30px;
+    width: 378px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: bold;
+    font-family: 'Nokia Pure Text'; 
+    border-radius: 2px;
+    background-color: #EEEEEE;
+    padding: 9px 6px 6px 9px;
+}
+
+img.img-icon {
+    width: 20px;
+    margin-bottom: -4px;
+    margin-right: 11px;
+
+}
+div.alert.alert-error {
+    position: absolute;
+    top: 0px;
+    padding-right: 36px
+    z-index: 1;
+}
+
+div.feedback-success {
+    background-color: rgba(155,155,255,0.1);
+}
+
+div.feedback-warning {
+    background-color: rgba(255,175,0,0.1);
+}
+
+div.feedback-error {
+    background-color: rgba(255,0,0,0.1);
+}
+
+div#kc-header {
+    position: absolute;
+    padding-top: 100px;
+    height: 601px;
+    width: 281px;
+    color: #FFFFFF;
+    font-family: "Nokia Pure Text";
+    font-size: 14px;
+    line-height: 32px;
+    padding-left: 34px;
+}
+
+div#kc-header::after {
+    content: "© 2017 Nokia";
+    font-size: 10px;
+    width: 112px;
+    color: #FFFFFF;
+    font-family: "Nokia Pure Text";
+    height: 13px;
+    line-height: 13px;
+    padding-top: 6px;
+    opacity: 0.38;
+}
+
+div#kc-registration {
+    margin-bottom: 20px;
+}
+
+div#social-login {
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    float: right;
+    width: 150px;
+    padding: 20px 0 200px 40px;
+}
+
+div.social-login span {
+    display: none;
+}
+
+div#kc-social-providers ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+div#kc-social-providers ul li {
+    margin-bottom: 20px;
+}
+
+div#kc-social-providers ul li span {
+    display: inline;
+    width: 100px;
+}
+
+a.zocial {
+    border: none;
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0.1)) !important;
+    background: -moz-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0.1)) !important;
+    background: -ms-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0.1)) !important;
+    background: -o-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0.1)) !important;
+    box-shadow: 0px 0px 6px rgba(0,0,0,0.5);
+    color: rgba(0,0,0,0.6);
+    width: 130px;
+    text-shadow: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
